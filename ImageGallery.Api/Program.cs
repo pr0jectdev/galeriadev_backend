@@ -50,7 +50,7 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddCors(options => {
     options.AddPolicy("AllowFrontend", policy => {
-        policy.WithOrigins("https://galeriadev-backend.onrender.com")
+        policy.WithOrigins("https://galeriadev-frontend-git-dev-marcdevorg.vercel.app/")
               .AllowAnyHeader()
               .AllowAnyMethod();
     });
