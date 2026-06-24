@@ -56,8 +56,6 @@ builder.Services.AddCors(options => {
     });
 });
 
-app.UseCors("AllowFrontend");
-
 // ----------------------- Autenticação JWT (tokens emitidos pelo Supabase Auth) -----------------------
 // Desde maio/2025 todo projeto novo do Supabase usa "JWT Signing Keys" assimétricas
 // (RS256/ES256) por padrão, em vez do antigo segredo compartilhado (HS256). Por isso
@@ -108,7 +106,8 @@ if (app.Environment.IsDevelopment()) {
 }
 
 app.UseHttpsRedirection();
-app.UseCors("Frontend");
+app.UseCors("AllowFrontend");
+//app.UseCors("Frontend");
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
