@@ -39,14 +39,24 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 // ----------------------- CORS (Angular dev server / produção) -----------------------
+//builder.Services.AddCors(options => {
+//    options.AddPolicy("Frontend", policy => {
+//        policy.WithOrigins(corsConfig.AllowedOrigins.ToArray())
+//              .AllowAnyHeader()
+//              .AllowAnyMethod()
+//              .AllowCredentials();
+//    });
+//});
+
 builder.Services.AddCors(options => {
-    options.AddPolicy("Frontend", policy => {
-        policy.WithOrigins(corsConfig.AllowedOrigins.ToArray())
+    options.AddPolicy("AllowFrontend", policy => {
+        policy.WithOrigins("https://galeriadev-backend.onrender.com")
               .AllowAnyHeader()
-              .AllowAnyMethod()
-              .AllowCredentials();
+              .AllowAnyMethod();
     });
 });
+
+app.UseCors("AllowFrontend");
 
 // ----------------------- Autenticação JWT (tokens emitidos pelo Supabase Auth) -----------------------
 // Desde maio/2025 todo projeto novo do Supabase usa "JWT Signing Keys" assimétricas
