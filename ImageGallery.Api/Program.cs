@@ -39,22 +39,22 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 // ----------------------- CORS (Angular dev server / produção) -----------------------
-//builder.Services.AddCors(options => {
-//    options.AddPolicy("Frontend", policy => {
-//        policy.WithOrigins(corsConfig.AllowedOrigins.ToArray())
-//              .AllowAnyHeader()
-//              .AllowAnyMethod()
-//              .AllowCredentials();
-//    });
-//});
-
 builder.Services.AddCors(options => {
-    options.AddPolicy("AllowFrontend", policy => {
-        policy.WithOrigins("https://galeriadev-frontend-git-dev-marcdevorg.vercel.app/")
+    options.AddPolicy("Frontend", policy => {
+        policy.WithOrigins(corsConfig.AllowedOrigins.ToArray())
               .AllowAnyHeader()
-              .AllowAnyMethod();
+              .AllowAnyMethod()
+              .AllowCredentials();
     });
 });
+
+//builder.Services.AddCors(options => {
+//    options.AddPolicy("AllowFrontend", policy => {
+//        policy.WithOrigins("https://galeriadev-frontend-git-dev-marcdevorg.vercel.app/")
+//              .AllowAnyHeader()
+//              .AllowAnyMethod();
+//    });
+//});
 
 // ----------------------- Autenticação JWT (tokens emitidos pelo Supabase Auth) -----------------------
 // Desde maio/2025 todo projeto novo do Supabase usa "JWT Signing Keys" assimétricas
@@ -100,14 +100,17 @@ var app = builder.Build();
 
 app.UseMiddleware<ExceptionHandlingMiddleware>();
 
-if (app.Environment.IsDevelopment()) {
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+//if (app.Environment.IsDevelopment()) {
+//    app.UseSwagger();
+//    app.UseSwaggerUI();
+//}
+
+app.UseSwagger();
+app.UseSwaggerUI();
 
 app.UseHttpsRedirection();
-app.UseCors("AllowFrontend");
-//app.UseCors("Frontend");
+//app.UseCors("AllowFrontend");
+app.UseCors("Frontend");
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
